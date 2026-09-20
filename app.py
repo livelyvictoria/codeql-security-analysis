@@ -1,4 +1,4 @@
-import os
+
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -14,8 +14,14 @@ def home():
 @app.route("/run")
 def run_command():
     command = request.args.get("command")
-    os.system(command)
-    return "Command executed"
+
+    allowed_commands = {
+        "hello": "Hello!",
+        "status": "System is running."
+    }
+
+    result = allowed_commands.get(command, "Invalid command.")
+    return result
 
 if __name__ == "__main__":
     app.run()
